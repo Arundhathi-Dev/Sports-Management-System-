@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Teams</title>
+
+    <link rel="stylesheet" href="./style.css">
+
+<script type="text/javascript">
+      function checkUserLogin(){
+          var isLoggedIn=localStorage.getItem('isLoggedIn', "false");
+          if(isLoggedIn=="false")
+              window.location.replace("/admin");
+
+          document.getElementById("submitButton").onclick = CallWebAPI
+
+      }
+
+      function generate_table(players) {
+        var body = document.getElementsByTagName("body")[0];
+
+        var tbl = document.createElement("table");
+        tbl.id = "info_table";
+        var tblBody = document.createElement("tbody");
+
+        var irow = document.createElement("tr");
+
+        var icell0 = document.createElement("td");
+        var icellText0 = document.createTextNode("ID");
+        icell0.appendChild(icellText0);
+        irow.appendChild(icell0);
+
+        var icell1 = document.createElement("td");
+        var icellText1 = document.createTextNode("First Name");
+        icell1.appendChild(icellText1);
+        irow.appendChild(icell1);
+
+        var icell2 = document.createElement("td");
+        var icellText2 = document.createTextNode("TAG");
+        icell2.appendChild(icellText2);
+        irow.appendChild(icell2);
+
+        var icell3 = document.createElement("td");
+        var icellText3 = document.createTextNode("Last Name");
+        icell3.appendChild(icellText3);
+        irow.appendChild(icell3);
+
+        tblBody.appendChild(irow);
+
+       for (var i = 0; i < players.length; i++) {
+          // creates a table row
+          var row = document.createElement("tr");
+
+          var cell0 = document.createElement("td");
+          var cellText0 = document.createTextNode(players[i].id);
+          cell0.appendChild(cellText0);
+          row.appendChild(cell0);
+            
+          var cell1 = document.createElement("td");
+          var cellText1 = document.createTextNode(players[i].first_name);
+          cell1.appendChild(cellText1);
+          row.appendChild(cell1);
+
+          var cell2 = document.createElement("td");
+          var cellText2 = document.createTextNode(players[i].tag);
+          cell2.appendChild(cellText2);
+          row.appendChild(cell2);
+
+          var cell3 = document.createElement("td");
+          var cellText3 = document.createTextNode(players[i].last_name);
+          cell3.appendChild(cellText3);
+          row.appendChild(cell3);
+        
+
+          // add the row to the end of the table body
+          tblBody.appendChild(row);
+        }
+
+        // put the <tbody> in the <table>
+        tbl.appendChild(tblBody);
+        // appends <table> into <body>
+        body.appendChild(tbl);
+        // sets the border attribute of tbl to 2;
+        tbl.setAttribute("border", "2");
+      }
+
+      function CallWebAPI() {
+        // New XMLHTTPRequest   
+        var teamID = document.getElementById("teamID").value;
+        var tbl = document.getElementById("info_table");
+        if(tbl!=null)
+          tbl.remove();
+        if(teamID!=""){
+            var request = new XMLHttpRequest();
+            request.open("GET", "http://localhost:3000/api/admin/teamPlayers/" + teamID, false);
+            request.send();
+            var responseText = request.responseText;
+            var response = JSON.parse(responseText);
+            console.log(responseText);
+            generate_table(response);
+            // }
+        }
+      }
+
+      window.onload = checkUserLogin
+    </script>
+
+</head>
+<body>
+<div class="testbox">
+      <form action="/">
+        <div class="banner">
+          <h1>Team Players</h1>
+        </div>
+        <h2>Get players of a team</h2>
+        <div class="item">
+          <p>Team id</p>
+            <input type="text" name="teamID" placeholder="Team ID" id="teamID"/>
+        </div>
+        <div class="btn-block">
+          <button type="button" id="submitButton">Send</button>
+        </div>
+      </form>
+    </div>
+</body>
+</html>

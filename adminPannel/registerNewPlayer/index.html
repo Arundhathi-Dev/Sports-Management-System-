@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>New Team Entry</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">  
+    <script type="text/javascript">
+      function checkUserLogin(){
+          var isLoggedIn=localStorage.getItem('isLoggedIn', "false");
+          if(isLoggedIn=="false")
+              window.location.replace("/admin");
+
+          document.getElementById("submitButton").onclick = CallWebAPI
+
+      }
+
+      function CallWebAPI() {
+        // New XMLHTTPRequest   
+        var firstName = document.getElementById("firstName").value;
+        var tag = document.getElementById("tag").value;
+        var lastName = document.getElementById("lastName").value;
+        var teamID = document.getElementById("teamID").value;
+
+        if(firstName!="" && tag!="" && lastName!="" && teamID!=""){
+            var request = new XMLHttpRequest();
+            request.open("POST", "http://localhost:3000/api/admin/registerPlayer", false);
+            request.setRequestHeader("Content-Type", "application/json");
+            request.send(JSON.stringify({"firstName": firstName, "tag": tag, "lastName": lastName, "teamID": teamID}));
+            // view request status
+            var responseText = request.responseText;
+            if(request.responseText === "Done"){
+              alert("Done!");
+            }
+            else{
+              alert(request.statusText)
+            }
+        }
+      }
+
+      window.onload = checkUserLogin
+    </script>
+  </head>
+  <body>
+    <div class="testbox">
+      <div class="form">
+        <div class="banner">
+          <h1>New Player Entry</h1>
+        </div>
+        <h2>Register New player for a team</h2>
+        <div class="item">
+          <p>Name</p>
+          <div class="name-item">
+            <input type="text" name="name" placeholder="First" id="firstName" />
+            <input type="text" name="name" placeholder="Tag" id="tag" />
+            <input type="text" name="name" placeholder="Last" id="lastName"/>
+          </div>
+        </div>
+        <div class="item">
+          <p>Team ID</p>
+            <input type="text" name="name" placeholder="Team ID" id="teamID" />
+        </div>
+        <div class="btn-block">
+          <button type="submit" id="submitButton">Send</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

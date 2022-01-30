@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Invalidate Ticket</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">  
+    <script type="text/javascript">
+      function checkUserLogin(){
+          var isLoggedIn=localStorage.getItem('isLoggedIn', "false");
+          if(isLoggedIn=="false")
+              window.location.replace("/admin");
+
+          document.getElementById("submitButton").onclick = CallWebAPI
+
+      }
+
+      function CallWebAPI() {
+        console.log("Called function")
+        // New XMLHTTPRequest   
+        var ticketId = document.getElementById("ticketId").value;
+        if(ticketId!=""){
+            var request = new XMLHttpRequest();
+            request.open("DELETE", "http://localhost:3000/api/admin/invalidateTicket", false);
+            request.setRequestHeader("Content-Type", "application/json");
+            request.send(JSON.stringify({"id": ticketId}));
+            // view request status
+            var responseText = request.responseText;
+            if(request.responseText === "Done!"){
+              alert("Done!");
+            }
+            else{
+              alert(request.statusText)
+            }
+        }
+      }
+
+      window.onload = checkUserLogin
+    </script>
+  </head>
+  <body>
+    <div class="testbox">
+      <div class="banner">
+        <h1>Invalidate Ticket</h1>
+      </div>
+      <h2>Invalidate Ticket and request a refund</h2>
+      <div class="item">
+        <p>Ticket ID</p>
+        <input type="text" name="ticketId" id="ticketId" />
+      </div>
+      <br>
+      <div>
+        <button type="button" id="submitButton">Submit</button>
+      </div>
+    </div>
+  </body>
+</html>

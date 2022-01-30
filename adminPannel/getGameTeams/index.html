@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Teams</title>
+
+    <link rel="stylesheet" href="./style.css">
+
+    <script type="text/javascript">
+      function checkUserLogin(){
+          var isLoggedIn=localStorage.getItem('isLoggedIn', "false");
+          if(isLoggedIn=="false")
+              window.location.replace("/admin");
+
+          document.getElementById("submitButton").onclick = CallWebAPI
+
+      }
+
+      function generate_table(teams) {
+        var body = document.getElementsByTagName("body")[0];
+
+        var tbl = document.createElement("table");
+        tbl.id = "info_table";
+        var tblBody = document.createElement("tbody");
+
+        // creating all cells
+        for (var i = 0; i < teams.length; i++) {
+          // creates a table row
+          var row = document.createElement("tr");
+
+          var cell1 = document.createElement("td");
+          var cellText1 = document.createTextNode(teams[i].id);
+          cell1.appendChild(cellText1);
+          row.appendChild(cell1);
+
+          var cell2 = document.createElement("td");
+          var cellText2 = document.createTextNode(teams[i].team_name);
+          cell2.appendChild(cellText2);
+          row.appendChild(cell2);
+
+          tblBody.appendChild(row);
+        }
+
+        // put the <tbody> in the <table>
+        tbl.appendChild(tblBody);
+        // appends <table> into <body>
+        body.appendChild(tbl);
+        // sets the border attribute of tbl to 2;
+        tbl.setAttribute("border", "2");
+      }
+
+      function CallWebAPI() {
+        // New XMLHTTPRequest   
+        var gameId = document.getElementById("gameID").value;
+        var tbl = document.getElementById("info_table");
+        if(tbl!=null)
+          tbl.remove();
+        if(gameId!=""){
+            var request = new XMLHttpRequest();
+            request.open("GET", "http://localhost:3000/api/admin/gameTeams/" + gameId, false);
+            request.send();
+            var responseText = request.responseText;
+            var response = JSON.parse(responseText);
+            console.log(responseText);
+            generate_table(response);
+            // }
+        }
+      }
+
+      window.onload = checkUserLogin
+    </script>
+
+</head>
+<body>
+
+<div class="testbox">
+      <form action="/">
+        <div class="banner">
+          <h1>Get Teams</h1>
+        </div>
+        <h2>Get Teams for a particular game</h2>
+        <div class="item">
+          <p>Game id</p>
+            <input type="text" name="name" placeholder="Game id" id="gameID"/>
+        </div>
+        <br>
+        <div class="btn-block">
+          <button type="button" id="submitButton">Send</button>
+        </div>
+      </form>
+    </div>
+
+</body>
+</html>

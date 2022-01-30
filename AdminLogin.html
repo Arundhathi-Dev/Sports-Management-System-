@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>Admin-Login</title>
+        <link rel="stylesheet" href="alogin.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <script>
+            function myFunction(){
+                var x = document.getElementById("password");
+                var y = document.getElementById("hide1");
+                var z = document.getElementById("hide2");
+                if(x.type=='password'){
+                    x.type="text";
+                    y.style.display="block";
+                    z.style.display="none";
+                }
+                else{
+                    x.type="password";
+                    y.style.display="none";
+                    z.style.display="block";
+                }
+            }
+
+            function CallWebAPI(){
+                // New XMLHTTPRequest   
+                var userid = document.getElementById("loginID").value;
+                var password = document.getElementById("password").value;    
+                if(userid!="" && password!=""){
+                    var request = new XMLHttpRequest();
+                    request.open("POST", "http://localhost:3000/api/adminlogin", false);
+                    request.setRequestHeader("Content-Type", "application/json");
+                    request.send(JSON.stringify({"uid": userid, "password": password}));
+                    // view request status
+                    var responseText = request.responseText;
+                    if(responseText=="true"){
+                        alert("Logged IN!!")
+                        localStorage.setItem('isLoggedIn', "true");
+                        window.location.replace("/admin/pannel");
+                    }
+                    else if(responseText == "false"){
+                        alert("Invalid Credentials!");
+                    }
+                    else
+                      alert("User not found!");
+              }
+            }
+        </script>
+    </head>
+    <body>
+        <div class="form-box">
+            <h1>Admin Login</h1>
+            <div class="input-box">
+                <i class="fa fa-user-circle-o"></i>
+                <input type="User-ID" placeholder="User ID" id="loginID">
+            </div>
+            <div class="input-box">
+                <i class="fa fa-key"></i>
+                <input type="password" placeholder="Password" id="password">
+                <span class="eye" onclick="myFunction()">
+                <i id="hide1" class="fa fa-eye"></i>
+                <i id="hide2" class="fa fa-eye-slash"></i>
+            </span>
+            </div>
+            <button type="button" class="login-btn" onclick="CallWebAPI()">LOGIN</button>
+            <h1 id="responseId">heelllooo</h1>
+        </div>
+
+    </body>
+</html>

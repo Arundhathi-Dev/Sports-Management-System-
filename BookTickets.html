@@ -1,0 +1,111 @@
+<html>
+    <head>
+        <title>BookTickets</title>
+        <link href="bt.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript">
+            function changeColor(value, element){
+                if(value === "yes"){
+                    element.style="color: green";
+                }
+                else{
+                    element.style="color:grey";
+                }
+            }
+
+            function openDetails(date_class){
+                window.location.href = "/tickets/details/" + date_class;
+                console.log("onclicked: " + date_class)
+            }
+
+            function loadTickets(){
+                var request = new XMLHttpRequest();
+                request.open("GET", "http://localhost:3000/api/tickets", false);
+                request.send();
+                // view request status
+                var response = JSON.parse(request.responseText);
+                var j=1;
+                var original = document.getElementById('main_card1');
+                original.childNodes[3].childNodes[3].childNodes[1].innerHTML = response[0].name;
+                original.childNodes[3].childNodes[5].childNodes[1].innerHTML = response[0].extras;
+                original.childNodes[3].childNodes[7].childNodes[1].innerHTML = "FRIDAY";
+                original.childNodes[3].childNodes[7].childNodes[3].innerHTML = "SATURDAY";
+                original.childNodes[3].childNodes[7].childNodes[5].innerHTML = "SUNDAY";
+                original.childNodes[3].childNodes[7].childNodes[9].innerHTML = `Price: $${response[0].price}`;
+                original.childNodes[3].childNodes[7].childNodes[7].onclick = (function(opt) {
+                        return function() {
+                           openDetails(opt.ticket_dates);
+                        };
+                    })(response[0]  );
+                changeColor(response[0].FRIDAY, original.childNodes[3].childNodes[7].childNodes[1]);
+                changeColor(response[0].SATURDAY, original.childNodes[3].childNodes[7].childNodes[3]);
+                changeColor(response[0].SUNDAY, original.childNodes[3].childNodes[7].childNodes[5]);
+
+                var friday = "FRIDAY"
+                for(var i = 1; i < response.length; i++) {
+                    var ticket = response[i];
+                    var clone = original.cloneNode(true); // "deep" clone
+                    clone.id = "main_card" + ++j;
+                    clone.childNodes[3].childNodes[3].childNodes[1].innerHTML = ticket.name;
+                    clone.childNodes[3].childNodes[5].childNodes[1].innerHTML = ticket.extras;
+                    clone.childNodes[3].childNodes[7].childNodes[1].innerHTML = "FRIDAY";
+                    clone.childNodes[3].childNodes[7].childNodes[3].innerHTML = "SATURDAY";
+                    clone.childNodes[3].childNodes[7].childNodes[5].innerHTML = "SUNDAY";
+                    clone.childNodes[3].childNodes[7].childNodes[9].innerHTML = `Price: $${ticket.price}`;
+                    clone.childNodes[3].childNodes[7].childNodes[7].onclick = (function(opt) {
+                        return function() {
+                           openDetails(opt.ticket_dates);
+                        };
+                    })(ticket);
+
+                    // function(){
+                    //     return function(){
+                    //     console.log('Checking ', ticket.ticket_dates);
+                    //     window.location.replace("/tickets/details/" + ticket.ticket_dates);
+                    // }
+                    // })
+                    changeColor(ticket.FRIDAY, clone.childNodes[3].childNodes[7].childNodes[1]);
+                    changeColor(ticket.SATURDAY, clone.childNodes[3].childNodes[7].childNodes[3]);
+                    changeColor(ticket.SUNDAY, clone.childNodes[3].childNodes[7].childNodes[5]);
+                    original.parentNode.appendChild(clone);
+                    // document.getElementById("card_title" + j).innerHTML = ticket.name;
+                }
+                original.parentNode.removeChild(original.parentNode.childNodes[0]);
+
+            }
+            window.onload = loadTickets
+        </script>
+
+    </head>
+    <body>
+        <header>
+                <div class="tagline">
+                    <h1>Grab Your Tickets Now!</h1>
+                </div>
+            </header>
+            <div style="display: grid; grid-template-columns: 25% 25% 25% 25%;">
+                <div id="main_card1" class="main">
+
+                    <!--cards -->
+                   
+                   <div class="card">
+                       <div class="image">
+                          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqowMz3mtUvBXoYJnraokoUuoFgZI7HQ7zCQ&usqp=CAU">
+                       </div>
+                       <div class="title">
+                        <h2 id="card_title1">Write title Here</h2>
+                       </div>
+                       <div class="des">
+                        <p id="card_desc1">You can Add Desccription Here...</p>
+                       </div>
+                       <div class="days">
+                           <h4 id="card_day1_1">DAY 1</h4>
+                           <h4 id="card_day2_1">DAY 2</h4>
+                           <h4 id="card_day3_1">DAY 3</h4>
+                           <button id="card_details1">Ticket Details</button>
+                           <h4 id="price1">Price :$500</h4>
+                       </div>
+                   </div>
+                </div>
+            </div>
+    </body>
+</html>

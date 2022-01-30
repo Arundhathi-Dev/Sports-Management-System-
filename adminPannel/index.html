@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<!-- saved from url=(0065)file:///G:/Stuff/smash-template-opl/smash-template-opl/index.html -->
+<html class="js sizes customelements history pointerevents postmessage webgl websockets cssanimations csscolumns csscolumns-width csscolumns-span csscolumns-fill csscolumns-gap csscolumns-rule csscolumns-rulecolor csscolumns-rulestyle csscolumns-rulewidth csscolumns-breakbefore csscolumns-breakafter csscolumns-breakinside flexbox picture srcset webworkers" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    
+    <!--====== Title ======-->
+    <title>Admin Pannel</title>
+    
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--====== Favicon Icon ======-->
+
+        
+    <!--====== Line Icons CSS ======-->
+    <link rel="stylesheet" href="/public/index_files/LineIcons.css">
+        
+    <!--====== Bootstrap CSS ======-->
+    <link rel="stylesheet" href="/public/index_files/bootstrap.min.css">
+    
+    <!--====== Default CSS ======-->
+    <link rel="stylesheet" href="/public/index_files/default.css">
+    
+    <!--====== Style CSS ======-->
+    <link rel="stylesheet" href="/public/index_files/style.css">
+
+    <script type="text/javascript">
+        function checkUserLogin(){
+            var isLoggedIn=localStorage.getItem('isLoggedIn', "false");
+            if(isLoggedIn=="false")
+                window.location.replace("/admin");
+        }
+        function LogOut(){
+            localStorage.setItem('isLoggedIn', "false"); 
+            window.location.replace("/admin");
+        }
+        window.onload = checkUserLogin
+    </script>
+    
+</head>
+
+<body style="background: #474747">
+    <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]-->
+   
+    <!--====== PRELOADER PART START ======-->
+
+    <div class="preloader" style="display: none;">
+        <div class="loader">
+            <div class="ytp-spinner">
+                <div class="ytp-spinner-container">
+                    <div class="ytp-spinner-rotator">
+                        <div class="ytp-spinner-left">
+                            <div class="ytp-spinner-circle"></div>
+                        </div>
+                        <div class="ytp-spinner-right">
+                            <div class="ytp-spinner-circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--====== PRELOADER PART ENDS ======-->
+    
+    
+
+    
+
+    
+    
+    
+    <section class="navbar-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg">
+
+                        <div class="navbar-btn d-none d-sm-inline-block">
+                            <ul>
+                                <li><a class="solid" onclick="LogOut()">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </nav> <!-- navbar -->
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </section>
+    
+
+    
+    
+    <!--====== FEATRES TWO PART START ======-->
+
+    <section id="services" class="features-area">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-10">
+                    <div class="section-title text-center pb-10">
+                        <h3 class="title">Admin Pannel</h3>
+                        <p class="text">Manage currently ongoing tournament via this pannel.</p>
+                    </div> <!-- row -->
+                </div>
+            </div> <!-- row -->
+            <!--row 1-->
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-7 col-sm-9">
+                    <div class="single-features mt-40">
+                        <div class="features-title-icon d-flex justify-content-between">
+                            <h4 class="features-title"><a href="pannel/newTeamEntry/">Register New Team</a></h4>
+                            <div class="features-icon">
+                                <i class="lni lni-brush"></i>
+                                <img class="shape" src="/public/index_files/f-shape-1.svg" alt="Shape">
+                            </div>
+                        </div>
+                        <div class="features-content">
+                            <p class="text">Register a new team for the currently ongoing tournament.</p>
+                        </div>
+                    </div> <!-- single features -->
+                </div>
+                <div class="col-lg-4 col-md-7 col-sm-9">
+                    <div class="single-features mt-40">
+                        <div class="features-title-icon d-flex justify-content-between">
+                            <h4 class="features-title"><a href="pannel/removeTeam/">Remove a team</a></h4>
+                            <div class="features-icon">
+                                <i class="lni lni-layout"></i>
+                                <img class="shape" src="/public/index_files/f-shape-1.svg" alt="Shape">
+                            </div>
+                        </div>
+                        <div class="features-content">
+                            <p class="text">Remove a team from the lineup.</p>
+                        </div>
+                    </div> <!-- single features -->
+                </div>
+                <div class="col-lg-4 col-md-7 col-sm-9">
+                    <div class="single-features mt-40">
+                        <div class="features-title-icon d-flex justify-content-between">
+                            <h4 class="features-title"><a href="pannel/getGameTeams/">Get Teams for a game</a></h4>
+                            <div class="features-icon">
+                                <i class="lni lni-bolt"></i>
+                                <img class="shape" src="/public/index_files/f-shape-1.svg" alt="Shape">
+                            </div>
+                        </div>
+                        <div class="features-content">
+                            <p class="text">Get all teams participating for a game</p>
+                        </div>
+                    </div> <!-- single features -->
+                </div>
+            </div> <!-- row -->
+            <!--row 2-->
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-7 col-sm-9">
+                    <div class="single-features mt-40">
+                        <div class="features-title-icon d-flex justify-content-between">
+                            <h4 class="features-title"><a href="pannel/registerNewPlayer/">Register New Player</a></h4>
+                            <div class="features-icon">
+                                <i class="lni lni-brush"></i>
+                                <img class="shape" src="/public/index_files/f-shape-1.svg" alt="Shape">
+                            </div>
+                        </div>
+                        <div class="features-content">
+                            <p class="text">Register a new player for a team.</p>
+                        </div>
+                    </div> <!-- single features -->
+                </div>
+                <div class="col-lg-4 col-md-7 col-sm-9">
+                    <div class="single-features mt-40">
+                        <div class="features-title-icon d-flex justify-content-between">
+                            <h4 class="features-title"><a href="pannel/removePlayer/">Remove a player</a></h4>
+                            <div class="features-icon">
+                                <i class="lni lni-layout"></i>
+                                <img class="shape" src="/public/index_files/f-shape-1.svg" alt="Shape">
+                            </div>
+                        </div>
+                        <div class="features-content">
+                            <p class="text">Remove a player from a team.</p>
+                        </div>
+                    </div> <!-- single features -->
+                </div>
+                <div class="col-lg-4 col-md-7 col-sm-9">
+                    <div class="single-features mt-40">
+                        <div class="features-title-icon d-flex justify-content-between">
+                            <h4 class="features-title"><a href="pannel/getAllPlayersOfTeam/">Get all players of a team</a></h4>
+                            <div class="features-icon">
+                                <i class="lni lni-bolt"></i>
+                                <img class="shape" src="/public/index_files/f-shape-1.svg" alt="Shape">
+                            </div>
+                        </div>
+                        <div class="features-content">
+                            <p class="text">Get all players playing in a particular team.</p>
+                        </div>
+                    </div> <!-- single features -->
+                </div>
+            </div> <!-- row -->
+            <!--row 3-->
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-7 col-sm-9">
+                    <div class="single-features mt-40">
+                        <div class="features-title-icon d-flex justify-content-between">
+                            <h4 class="features-title"><a href="pannel/changeGameLocation/">Change Game Location</a></h4>
+                            <div class="features-icon">
+                                <i class="lni lni-brush"></i>
+                                <img class="shape" src="/public/index_files/f-shape-1.svg" alt="Shape">
+                            </div>
+                        </div>
+                        <div class="features-content">
+                            <p class="text">Change the arena where a game is taking place.</p>
+                        </div>
+                    </div> <!-- single features -->
+                </div>
+                <div class="col-lg-4 col-md-7 col-sm-9">
+                    <div class="single-features mt-40">
+                        <div class="features-title-icon d-flex justify-content-between">
+                            <h4 class="features-title"><a href="pannel/changeGameDates/">Change Game Dates</a></h4>
+                            <div class="features-icon">
+                                <i class="lni lni-layout"></i>
+                                <img class="shape" src="/public/index_files/f-shape-1.svg" alt="Shape">
+                            </div>
+                        </div>
+                        <div class="features-content">
+                            <p class="text">Change the dates for a particular game.</p>
+                        </div>
+                    </div> <!-- single features -->
+                </div>
+                <div class="col-lg-4 col-md-7 col-sm-9">
+                    <div class="single-features mt-40">
+                        <div class="features-title-icon d-flex justify-content-between">
+                            <h4 class="features-title"><a href="pannel/invalidateTicket/">Invalidate a ticket</a></h4>
+                            <div class="features-icon">
+                                <i class="lni lni-bolt"></i>
+                                <img class="shape" src="/public/index_files/f-shape-1.svg" alt="Shape">
+                            </div>
+                        </div>
+                        <div class="features-content">
+                            <p class="text">Invalidate a ticket and request a refund for the same.</p>
+                        </div>
+                    </div> <!-- single features -->
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </section>
+
+    <!--====== FEATRES TWO PART ENDS ======-->
+    
+    <!--====== PORTFOLIO PART START ======-->
+
+    
+
+    
+    
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+    
+    
+
+    
+
+        
+
+    
+
+
+
+    
+
+
+
+
+    
+    <script src="./index_files/jquery-1.12.4.min.js.download"></script>
+    <script src="./index_files/modernizr-3.7.1.min.js.download"></script>
+    
+    <!--====== Bootstrap js ======-->
+    <script src="./index_files/popper.min.js.download"></script>
+    <script src="./index_files/bootstrap.min.js.download"></script>
+    
+    <!--====== Slick js ======-->
+    <script src="./index_files/slick.min.js.download"></script>
+    
+    <!--====== Magnific Popup js ======-->
+    <script src="./index_files/jquery.magnific-popup.min.js.download"></script>
+    
+    <!--====== Ajax Contact js ======-->
+    <script src="./index_files/ajax-contact.js.download"></script>
+    
+    <!--====== Isotope js ======-->
+    <script src="./index_files/imagesloaded.pkgd.min.js.download"></script>
+    <script src="./index_files/isotope.pkgd.min.js.download"></script>
+    
+    <!--====== Scrolling Nav js ======-->
+    <script src="./index_files/jquery.easing.min.js.download"></script>
+    <script src="./index_files/scrolling-nav.js.download"></script>
+    
+    <!--====== Main js ======-->
+    <script src="./index_files/main.js.download"></script>
+    
+
+
+
+</body></html>

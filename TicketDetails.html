@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>BookTickets</title>
+        <script type="text/javascript">
+        	function changeText(){
+        		var pathArray = window.location.pathname.split('/');
+        		var request = new XMLHttpRequest();
+        		console.log("http://localhost:3000/api/ticketsType/"+ pathArray[pathArray.length-1])
+                request.open("GET", "http://localhost:3000/api/ticketsType/" + pathArray[pathArray.length-1], false);
+                request.send();
+                var response = JSON.parse(request.responseText);
+                var text = "\n";
+                for(var i = 0 ; i<response.length ; i++){
+                	console.log(response[i]);
+                	text += response[i].Title + "<br>"
+                }
+        		document.getElementById("helloworld").innerHTML = text;
+        	}
+        	window.onload = changeText
+        </script>
+    </head>
+<body>
+	<h1 id="helloworld">Hello World!</h1>

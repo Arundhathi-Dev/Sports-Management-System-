@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Change Game Location</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">  
+    <script type="text/javascript">
+      function checkUserLogin(){
+          var isLoggedIn=localStorage.getItem('isLoggedIn', "false");
+          if(isLoggedIn=="false")
+              window.location.replace("/admin");
+
+          document.getElementById("submitButton").onclick = CallWebAPI
+      }
+
+      function CallWebAPI() {
+        console.log("Called function")
+        // New XMLHTTPRequest   
+        var gameId = document.getElementById("gameId").value;
+        var newLocationId = document.getElementById("newLocationId").value;
+        console.log(newLocationId)
+        if(gameId!="" && newLocationId!=""){
+            var request = new XMLHttpRequest();
+            request.open("PUT", "http://localhost:3000/api/admin/changeGameLocation", false);
+            request.setRequestHeader("Content-Type", "application/json");
+            request.send(JSON.stringify({"id": gameId, "newLocationId": newLocationId}));
+            // view request status
+            var responseText = request.responseText;
+            if(request.responseText === "Done"){
+              alert("Done!");
+            }
+            else{
+              alert(request.statusText)
+            }
+        }
+      }
+
+      window.onload = checkUserLogin
+    </script>
+  </head>
+  <body>
+    <div class="testbox">
+      <div class="banner">
+        <h1>Change Game Location</h1>
+      </div>
+      <h2>Game Location Changer</h2>
+      <div class="item">
+        <p>Game ID</p>
+        <input type="text" name="gameId" id="gameId" />
+      </div>
+      <div class="item">
+        <p>New Location ID</p>
+        <input type="text" name="newLocationId" id="newLocationId"/>
+      </div>
+      <br>
+      <div>
+        <button type="button" id="submitButton">Submit</button>
+      </div>
+    </div>
+  </body>
+</html>

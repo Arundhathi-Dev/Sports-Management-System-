@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>New Team Entry</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">  
+    <script type="text/javascript">
+      function checkUserLogin(){
+          var isLoggedIn=localStorage.getItem('isLoggedIn', "false");
+          if(isLoggedIn=="false")
+              window.location.replace("/admin");
+
+          document.getElementById("submitButton").onclick = CallWebAPI
+
+      }
+
+      function CallWebAPI() {
+        // New XMLHTTPRequest   
+        var teamName = document.getElementById("teamName").value;
+        var originCountry = document.getElementById("originCountry").value;
+        var gameID = document.getElementById("gameID").value;
+
+        var member1FirstName = document.getElementById("member1FirstName").value;
+        var member1Tag = document.getElementById("member1Tag").value;
+        var member1LastName = document.getElementById("member1LastName").value;
+
+        var member2FirstName = document.getElementById("member2FirstName").value;
+        var member2Tag = document.getElementById("member2Tag").value;
+        var member2LastName = document.getElementById("member2LastName").value;
+
+        var member3FirstName = document.getElementById("member3FirstName").value;
+        var member3Tag = document.getElementById("member3Tag").value;
+        var member3LastName = document.getElementById("member3LastName").value;
+
+        var member4FirstName = document.getElementById("member4FirstName").value;
+        var member4Tag = document.getElementById("member4Tag").value;
+        var member4LastName = document.getElementById("member4LastName").value;
+
+        var member5FirstName = document.getElementById("member5FirstName").value;
+        var member5Tag = document.getElementById("member5Tag").value;
+        var member5LastName = document.getElementById("member5LastName").value;
+
+        console.log(member1FirstName, member2FirstName, member3FirstName, member4FirstName, member5FirstName);
+
+        if(teamName!="" && originCountry!="" && gameID!=""){
+
+            var teamCountRequest = new XMLHttpRequest();
+
+            teamCountRequest.open("GET", "http://localhost:3000/api/admin/teamCount", false);
+            teamCountRequest.send();
+
+            var teamCountRequestResponse = teamCountRequest.responseText;
+            console.log(teamCountRequestResponse);
+
+
+            var playerCountRequest = new XMLHttpRequest();
+
+            playerCountRequest.open("GET", "http://localhost:3000/api/admin/playerCount", false);
+            playerCountRequest.send();
+
+            var playerCountRequestResponse = playerCountRequest.responseText;
+            console.log(playerCountRequestResponse);
+
+            var request = new XMLHttpRequest();
+
+            request.open("POST", "http://localhost:3000/api/admin/registerNewteam", false);
+            request.setRequestHeader("Content-Type", "application/json");
+            request.send(JSON.stringify({"teamID": teamCountRequestResponse, "playerCount": playerCountRequestResponse, "teamName": teamName, "originCountry": originCountry, "gameID": gameID, 
+              "member1FirstName": member1FirstName, "member1Tag": member1Tag, "member1LastName": member1LastName,
+              "member2FirstName": member2FirstName, "member2Tag": member2Tag, "member2LastName": member2LastName,
+              "member3FirstName": member3FirstName, "member3Tag": member3Tag, "member3LastName": member3LastName,
+              "member4FirstName": member4FirstName, "member4Tag": member4Tag, "member4LastName": member4LastName,
+              "member5FirstName": member5FirstName, "member5Tag": member5Tag, "member5LastName": member5LastName
+            }));
+            // view request status
+            var responseText = request.responseText;
+            if(request.responseText === "Done!"){
+              alert("Done!");
+            }
+            else{
+              alert(request.statusText)
+            }
+          
+
+            
+        }
+      }
+
+      window.onload = checkUserLogin
+    </script>
+  </head>
+  <body>
+    <div class="testbox">
+      <div class="form">
+        <div class="banner">
+          <h1>New Team Entry</h1>
+        </div>
+        <h2>Team Details</h2>
+        <div class="item">
+          <p>Team name</p>
+            <input type="text" name="name" placeholder="Team Name" id="teamName" />
+        </div>
+        <div class="item">
+          <p>Origin Country</p>
+          <input type="text" name="name" id="originCountry" />
+        </div>
+        <div class="item">
+          <p>Game ID</p>
+          <input type="number" name="name" id="gameID" />
+        </div>
+                  <p>Team Members</p>
+        <div class="item">
+          <p>Player 1</p>
+          <div class="name-item">
+            <input type="text" name="name" placeholder="First" id="member1FirstName" />
+            <input type="text" name="name" placeholder="Tag" id="member1Tag" />
+            <input type="text" name="name" placeholder="Last" id="member1LastName"/>
+          </div>
+          <p>Player 2</p>
+          <div class="name-item">
+            <input type="text" name="name" placeholder="First" id="member2FirstName" />
+            <input type="text" name="name" placeholder="Tag" id="member2Tag" />
+            <input type="text" name="name" placeholder="Last" id="member2LastName"/>
+          </div>
+          <p>Player 3</p>
+          <div class="name-item">
+            <input type="text" name="name" placeholder="First" id="member3FirstName" />
+            <input type="text" name="name" placeholder="Tag" id="member3Tag" />
+            <input type="text" name="name" placeholder="Last" id="member3LastName"/>
+          </div>
+          <p>Player 4</p>
+          <div class="name-item">
+            <input type="text" name="name" placeholder="First" id="member4FirstName" />
+            <input type="text" name="name" placeholder="Tag" id="member4Tag" />
+            <input type="text" name="name" placeholder="Last" id="member4LastName"/>
+          </div>
+          <p>Player 5</p>
+          <div class="name-item">
+            <input type="text" name="name" placeholder="First" id="member5FirstName" />
+            <input type="text" name="name" placeholder="Tag" id="member5Tag" />
+            <input type="text" name="name" placeholder="Last" id="member5LastName"/>
+          </div>
+        </div>
+        <div class="btn-block">
+          <button type="submit" id="submitButton">Send</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Change Game Location</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">  
+    <script type="text/javascript">
+      function checkUserLogin(){
+          var isLoggedIn=localStorage.getItem('isLoggedIn', "false");
+          if(isLoggedIn=="false")
+              window.location.replace("/admin");
+
+          document.getElementById("submitButton").onclick = CallWebAPI
+
+      }
+
+      function CallWebAPI() {
+        console.log("Called function")
+        // New XMLHTTPRequest   
+        var teamId = document.getElementById("teamId").value;
+        if(teamId!="" ){
+          var request1 = new XMLHttpRequest();
+          request1.open("DELETE", "http://localhost:3000/api/admin/removeTeamP1", false);
+          request1.setRequestHeader("Content-Type", "application/json");
+          request1.send(JSON.stringify({"id": teamId}));
+          var responseText1 = request1.responseText;
+          if(responseText1 === "Done!"){
+            var request2 = new XMLHttpRequest();
+            request2.open("DELETE", "http://localhost:3000/api/admin/removeTeamP2", false);
+            request2.setRequestHeader("Content-Type", "application/json");
+            request2.send(JSON.stringify({"id": teamId}));
+            var responseText2 = request2.responseText;
+            if(request2 === "Done!"){
+              alert("Done!");
+            }
+            else{
+              alert(responseText2)
+            }
+          }
+          else{
+            alert(responseText1)
+          }
+        }
+      }
+
+      window.onload = checkUserLogin
+    </script>
+  </head>
+  <body>
+    <div class="testbox">
+      <div class="f">
+        <div class="banner">
+          <h1>Remove Team</h1>
+        </div>
+        <h2>Remove Team from game</h2>
+        <div class="item">
+          <p>Team ID</p>
+          <input type="text" name="teamId" id="teamId" />
+        </div>
+        <br>
+        <div>
+          <button type="button" id="submitButton">Submit</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
